@@ -13,8 +13,18 @@ Output: False
 """
 
 def has_duplicates(product_ids):
-    # Your implementation here
-    pass
+    seen = set()
+    for pid in product_ids:
+        if pid in seen:
+            return True
+        seen.add(pid)
+    return False    
+
+   
+#Justification:
+#   - I chose a set because it offers 0(1) average-time lookup and insertion.
+#   - As we iterate, we check if the current product ID already exists in the set.
+#   - This ensures detection of duplicates in 0(n) time when 0(n) extra space, which is more efficient than nested loops.
 
 
 """
@@ -29,18 +39,26 @@ task_queue.add_task("Email follow-up")
 task_queue.add_task("Code review")
 task_queue.remove_oldest_task() → "Email follow-up"
 """
+from collections import deque
 
 class TaskQueue:
     def __init__(self):
-        # Your initialization here
-        pass
+        self.queue = deque()
+        
 
     def add_task(self, task):
-        pass
+        self.queue.append(task)
 
     def remove_oldest_task(self):
-        pass
+       if self.queue:
+           return self.queue.popleft()
+       return None
 
+#Justification:
+#   - I chose a deque from Python's collections because it allows 0(1) appends
+#     and 0(1) pops from poth ends, unlike lists which take 0(n) when removing from the front. 
+#   - this matches the required "first in, first out" behavior. 
+    
 
 """
 Problem 3: Unique Value Counter
@@ -57,10 +75,15 @@ tracker.get_unique_count() → 2
 
 class UniqueTracker:
     def __init__(self):
-        pass
+        self.values = set()
 
     def add(self, value):
-        pass
+        self.values.add(value)
 
     def get_unique_count(self):
-        pass
+        return len(self.values)
+
+#Justification
+#   - I chose a set because it automatically ensures uniqueness of elements.
+#   - Insertion is 0(1) average time, and getting the count of unique values is 0(1).
+#   - This makes the tracker efficient for streaams of data where duplicates are common. 
